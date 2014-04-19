@@ -1,0 +1,6 @@
+<h1>Blackjack</h1>
+<p>Dealer's Cards</p>
+	<% session[:dealer_hand].each do |card| %>
+		<%= card %>
+		<% end %>
+<p><%= session[:username] + "'s Cards" %></p>

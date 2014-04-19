@@ -1,0 +1,9 @@
+<h1>Welcome to the game, <%= session[:username] %>!</h1>
+<p>How much do you want to wager on this hand?</p>
+<form action="/wager" method="post">
+	<label>Wager:
+		<input type="text" name="wager">
+	</label>
+	<input type="submit" name="Place Bet!" class="btn">
+</form>
+<%= "<p>Your bankroll is: $" + session[:bankroll].to_s + "</p>" %>
