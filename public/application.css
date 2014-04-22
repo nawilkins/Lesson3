@@ -1,0 +1,22 @@
+
+form#hit-form, form#stay-form {
+	float: left;
+	margin-right: 15px;
+}
+
+form#hit-form input, form#stay-form input {
+	width: 150px;
+}
+
+
+img.card-image {
+	margin-right: 15px;
+}
+
+form#wager input {
+	display: inline-block;
+}
+
+form#wager input[type=submit] {
+	margin-bottom: 10px;
+}

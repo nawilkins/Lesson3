@@ -1,6 +1,51 @@
 <h1>Blackjack</h1>
-<p>Dealer's Cards</p>
-	<% session[:dealer_hand].each do |card| %>
-		<%= card %>
+<% if total(session[:player_hand]) == 21 %>
+	<% @success = "#{session[:username]} got blackjack!" %>
+	<% @hit_or_stay_buttons = false %>
+	<% win %>
+	<% @new_game = true %>
+<% end %>
+<div class="well">
+	<h3>Dealer's Cards</h3>
+	<p>
+		<% if @dealer_turn %>
+			<% session[:dealer_hand].each do |card| %>
+				<%= card_image(card) %>
+			<% end %>
+			<% if total(session[:dealer_hand]) < 17 %>
+				<form method="post" action="/game/dealer/turn">
+					<input type="submit" value="See the dealer's next card" class="btn btn-primary">
+				</form>
+			<% else %>
+				<% redirect '/compare-scores' %>
+			<% end %>
+		<% elsif @new_game %>
+			<% session[:dealer_hand].each do |card| %>
+				<%= card_image(card) %>
+			<% end %>
+		<% else %>
+			<%= "<img src='/images/cards/cover.jpg'>" %>
+			<%= card_image(session[:dealer_hand][1]) %>
 		<% end %>
-<p><%= session[:username] + "'s Cards" %></p>
+	</p>
+	<p>Dealer's score is <%= total(session[:dealer_hand]) %></p>
+</div>
+
+<div class="well">
+	<h3><%= session[:username] + "'s Cards" %></h3>
+	<p><% session[:player_hand].each do |card| %>
+		<%= card_image(card) %>
+	<% end %>
+	</p>
+</div>
+
+<p><%= session[:username] + "'s score is " + total(session[:player_hand]).to_s %>
+
+<% if @hit_or_stay_buttons %>
+<form action="/game/hit" method="post" id="hit-form">
+	<input type="submit" value="Hit" class="btn btn-success">
+</form>
+<form action="/game/stay" method="post" id="stay-form">
+	<input type="submit" value="Stay" class="btn btn-warning">
+</form>
+<% end %>

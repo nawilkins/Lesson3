@@ -11,7 +11,7 @@
       <div class="navbar-inner">
         <div class="container">
             <ul class="nav">
-              <li><a href="/">Nav Item</a></li>
+              <li><a href="/start-over">Start Over</a></li>
             </ul>
         </div>
       </div>
@@ -21,7 +21,16 @@
     <%if @error %>
       <div class="alert alert-error"><%=@error%></div>
     <% end %>
-      <%= yield %>
+    <% if @success %>
+      <div class="alert alert-success"><%=@success%></div>
+      <% end %>
+      <% if @new_game %>
+    <div class="container">
+      <p><%= "Bankroll is now #{session[:bankroll]}." %></p>
+      <a href="/wager" class="btn btn-primary">Play Again?</a>
+    </div>
+  <% end %>
+    <%= yield %>
   </div>
   </body>
 </html>
