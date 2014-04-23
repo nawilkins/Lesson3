@@ -86,19 +86,23 @@ post '/setup' do
 end
 
 get '/wager' do
-  suits = ['H', 'D', 'S', 'C']
-  values = ['2', '3', '4', '5', '6', '7', '8', '9', 'J', 'Q', 'K', 'A']
-  deck = []
-  suits.each do |suit|
-    values.each do |value|
-      deck << [suit, value]
+  if session[:bankroll] == 0
+    redirect '/no-bankroll'
+  else
+    suits = ['H', 'D', 'S', 'C']
+    values = ['2', '3', '4', '5', '6', '7', '8', '9', 'J', 'Q', 'K', 'A']
+    deck = []
+    suits.each do |suit|
+      values.each do |value|
+        deck << [suit, value]
+      end
     end
+    deck.shuffle!
+    session[:deck] = deck
+    session[:player_hand] = []
+    session[:dealer_hand] = []
+    erb :wager
   end
-  deck.shuffle!
-  session[:deck] = deck
-  session[:player_hand] = []
-  session[:dealer_hand] = []
-  erb :wager
 end
 
 post '/wager' do
@@ -184,4 +188,8 @@ get '/compare-scores' do
     @new_game = true
   end
   erb :game
+end
+
+get '/no-bankroll' do
+  erb :no_bankroll
 end
