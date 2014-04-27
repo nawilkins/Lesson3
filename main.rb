@@ -78,8 +78,10 @@ post '/setup' do
   if params[:username].empty?
     @error = "Name is required"
     halt erb(:home)
+  elsif params[:username].to_i != 0
+    @error = "That's not your name..."
+    halt erb(:home)
   end
-
   session[:username] = params[:username]
   session[:bankroll] = 500
   redirect '/wager'
@@ -107,6 +109,15 @@ end
 
 post '/wager' do
   session[:wager] = params[:wager]
+  if session[:wager].to_i > session[:bankroll].to_i
+    @error = "You cannot bet more than your bankroll"
+    session[:wager] = 0
+    halt erb(:wager)
+  elsif session[:wager].to_i == 0
+    @error = "Please use a real number"
+    session[:wager] = 0
+    halt erb(:wager)
+  end
   player_hand = []
   dealer_hand = []
   deck = session[:deck]
@@ -127,20 +138,17 @@ end
 
 
 post '/game/hit' do
+  session[:player_hand] << session[:deck].pop
   if total(session[:player_hand]) > 21
     @error = "Sorry, #{session[:username]}'s total is greater than 21 - bust!"
     @hit_or_stay_buttons = false
     lose
-    erb :game
   elsif total(session[:player_hand]) == 21
     @success = "Congratulations, #{session[:username]} hit blackjack!"
     @hit_or_stay_buttons = false
     win
-    erb :game
-  else
-    session[:player_hand] << session[:deck].pop
-    erb :game
   end
+  erb :game, layout: false
 end
 
 post '/game/stay' do

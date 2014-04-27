@@ -1,3 +1,9 @@
+ <%if @error %>
+      <div class="alert alert-error"><%=@error%></div>
+    <% end %>
+    <% if @success %>
+      <div class="alert alert-success"><%=@success%></div>
+      <% end %>
 <h1>Welcome to the game, <%= session[:username] %>!</h1>
 <p>How much do you want to wager on this hand?</p>
 <form action="/wager" method="post" id="wager">

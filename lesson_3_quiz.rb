@@ -5,20 +5,20 @@
 #   - Javascript is a dynamic langauge that has many applications. Regarding the web, it is primarily a browser-side language that allows for the manipulation of HTML/CSS elements and interactivity.
 
 # 2.)
-# 	HTTP Headers
-# 	HTTP body (request type, path, etc)
-	
+# 	Method (get, post, etc)
+#	url
+# 	parameters
 
 # 3.) 
-# 	Response code
-# 	Body of request
+# 	Response/status code
+# 	Body of request/payload
 
 # 4.)
 # 	- To submit a post request, you use a form that has method set to 'POST' and the action set to the url that will process the request. You must also make sure the name of the input element carrying the payload matches the variable you want to process on the server e.g. input name="username" value="bob"
 # 	- If you wanted a GET request, you change the method to method="get" and the variables/parameters will then be appended to the url
 
 # 5.) 
-# 	It is important for web developers to understand the stateless protocol of HTTP requests so that if we need to persist data across our applications, we know how to do it via databases, sessions, cookies
+# 	It is important for web developers to understand the stateless protocol of HTTP requests because it means we essentially have to rebuild the state with each request by using tools to persist data across our applications via databases, sessions, cookies
 
 # 6.)
 # 	Browsers provide a good GUI to interact with, but anything can make an HTTP request, such as mobile applications, desktop apps, video game consoles and/or command line interfaces.

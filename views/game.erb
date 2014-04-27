@@ -1,3 +1,4 @@
+<div id="game">
 <h1>Blackjack</h1>
 <% if total(session[:player_hand]) == 21 %>
 	<% @success = "#{session[:username]} got blackjack!" %>
@@ -5,6 +6,18 @@
 	<% win %>
 	<% @new_game = true %>
 <% end %>
+    <%if @error %>
+      <div class="alert alert-error"><%=@error%></div>
+    <% end %>
+    <% if @success %>
+      <div class="alert alert-success"><%=@success%></div>
+      <% end %>
+    <% if @new_game %>
+        <div class="container">
+          <p><%= "Bankroll is now $#{session[:bankroll]}." %></p>
+          <a href="/wager" class="btn btn-primary">Play Again?</a>
+        </div>
+  <% end %>
 <div class="well">
 	<h3>Dealer's Cards</h3>
 	<p>
@@ -13,12 +26,13 @@
 				<%= card_image(card) %>
 			<% end %>
 			<% if total(session[:dealer_hand]) < 17 %>
-				<form method="post" action="/game/dealer/turn">
+				<form method="post" action="/game/dealer/turn" id="dealer-form">
 					<input type="submit" value="See the dealer's next card" class="btn btn-primary">
 				</form>
 			<% else %>
 				<% redirect '/compare-scores' %>
 			<% end %>
+			<p>Dealer's score is <%= total(session[:dealer_hand]) %></p>
 		<% elsif @new_game %>
 			<% session[:dealer_hand].each do |card| %>
 				<%= card_image(card) %>
@@ -28,7 +42,6 @@
 			<%= card_image(session[:dealer_hand][1]) %>
 		<% end %>
 	</p>
-	<p>Dealer's score is <%= total(session[:dealer_hand]) %></p>
 </div>
 
 <div class="well">
@@ -36,10 +49,11 @@
 	<p><% session[:player_hand].each do |card| %>
 		<%= card_image(card) %>
 	<% end %>
+	<p><%= "#{session[:username]} has $#{session[:bankroll]} and has bet $#{session[:wager]} on this game." %>
 	</p>
 </div>
 
-<p><%= session[:username] + "'s score is " + total(session[:player_hand]).to_s %>
+<p><%= session[:username] + "'s score is " + total(session[:player_hand]).to_s + ". What do you want to do?" %></p>
 
 <% if @hit_or_stay_buttons %>
 <form action="/game/hit" method="post" id="hit-form">
@@ -49,3 +63,4 @@
 	<input type="submit" value="Stay" class="btn btn-warning">
 </form>
 <% end %>
+</div>

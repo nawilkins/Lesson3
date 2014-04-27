@@ -1,3 +1,9 @@
+ <%if @error %>
+      <div class="alert alert-error"><%=@error%></div>
+    <% end %>
+    <% if @success %>
+      <div class="alert alert-success"><%=@success%></div>
+      <% end %>
 <h1>Welcome to Blackjack!</h1>
 <form method='post' action='/setup'>
 	<label >Name:

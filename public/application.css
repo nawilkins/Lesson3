@@ -20,3 +20,7 @@ form#wager input {
 form#wager input[type=submit] {
 	margin-bottom: 10px;
 }
+
+div#game {
+	margin: 0 auto;
+}
