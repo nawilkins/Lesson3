@@ -14,7 +14,7 @@
       <% end %>
     <% if @new_game %>
         <div class="container">
-          <p><%= "Bankroll is now $#{session[:bankroll]}." %></p>
+          <p><%= "Bankroll is now $ #{session[:bankroll]}." %></p>
           <a href="/wager" class="btn btn-primary">Play Again?</a>
         </div>
   <% end %>
